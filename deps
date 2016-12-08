@@ -1,0 +1,5 @@
+babel https://github.com/andrewstalin/babel.git
+liberror https://github.com/andrewstalin/liberror.git
+zlib https://github.com/madler/zlib
+gtest https://github.com/google/googletest
+cmake-modules https://github.com/andrewstalin/cmake-modules.git
