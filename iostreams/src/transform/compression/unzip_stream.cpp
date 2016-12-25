@@ -32,7 +32,7 @@ iostreams::ZipArchiveEntry GetEntryInfo(unzFile uf)
 {
 #ifdef _WIN32
 	char file_name_in_zip[MAX_PATH];
-#elif __linux__
+#elif defined (__linux__) || defined (__APPLE__)
 	char file_name_in_zip[PATH_MAX];
 #endif
 	unz_file_info64 file_info;
@@ -44,7 +44,7 @@ iostreams::ZipArchiveEntry GetEntryInfo(unzFile uf)
 #ifdef _WIN32
 	entry.name = babel::encode("cp866", "UTF-8", file_name_in_zip, strlen(file_name_in_zip));
 	entry.is_directory = (file_info.external_fa & FILE_ATTRIBUTE_DIRECTORY) != 0;
-#elif __linux__
+#elif defined (__linux__) || defined (__APPLE__)
 	entry.name = file_name_in_zip;
 #endif
 
@@ -78,7 +78,7 @@ namespace iostreams
 #ifdef _WIN32
 		auto en = babel::encode("UTF-8", "cp866", entry_name, strlen(entry_name));
 		rc = ::unzLocateFile(uf, en.c_str(), 0);
-#elif __linux__
+#elif defined (__linux__) || defined (__APPLE__)
 		rc = ::unzLocateFile(uf, entry_name, 0);
 #endif
 		THROW_IF(rc != UNZ_OK, ZLibException(rc, "unzLocateFile"));

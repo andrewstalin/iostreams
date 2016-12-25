@@ -37,7 +37,7 @@ namespace iostreams
 #ifdef _WIN32
 			auto en = babel::encode("UTF-8", "cp866", entry_name, strlen(entry_name));
 			rc = ::zipOpenNewFileInZip64(zf, en.c_str(), nullptr, nullptr, 0, nullptr, 0, nullptr, Z_DEFLATED, get_zlib_level(level), true);
-#elif __linux__
+#elif defined (__linux__) || defined (__APPLE__)
 			rc = ::zipOpenNewFileInZip64(zf, entry_name, nullptr, nullptr, 0, nullptr, 0, nullptr, Z_DEFLATED, get_zlib_level(level), true);
 #endif
 		}

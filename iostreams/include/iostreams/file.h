@@ -49,7 +49,7 @@ namespace iostreams
 		SHARE_READ = FILE_SHARE_READ,
 		SHARE_WRITE = FILE_SHARE_WRITE,
 		SHARE_READ_WRITE = FILE_SHARE_WRITE | FILE_SHARE_READ
-#elif __linux__
+#elif defined (__linux__) || defined (__APPLE__)
         NONE = 0,
 		IRWXU = S_IRWXU,
 		IRUSR = S_IRUSR,

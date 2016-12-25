@@ -9,7 +9,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE  OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifdef __linux__
+#if defined (__linux__) || defined (__APPLE__)
 #include "iostreams/file.h"
 #include "liberror/exception.h"
 #include <unistd.h>

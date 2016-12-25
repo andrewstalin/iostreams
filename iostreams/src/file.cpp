@@ -18,7 +18,7 @@ static constexpr uint16_t CHUNK_SIZE{ 4 * 1024 };
 
 #ifdef _WIN32
 #include "win_file.inl"
-#elif __linux__
+#elif defined (__linux__) || defined (__APPLE__)
 #include "unix_file.inl"
 #endif
 
