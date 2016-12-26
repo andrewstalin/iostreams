@@ -11,15 +11,15 @@
 
 #if defined (__linux__) || defined (__APPLE__)
 
-#ifdef __APPLE__ & __MACH__
-	#define lseek64 lseek
-	#define ftruncate64 ftruncate
-#endif
-
 #include "iostreams/file.h"
 #include "liberror/exception.h"
 #include <unistd.h>
 #include <fcntl.h>
+
+#ifdef __MACH__
+	#define lseek64 lseek
+	#define ftruncate64 ftruncate
+#endif
 
 namespace iostreams
 {

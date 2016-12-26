@@ -14,8 +14,6 @@
 #include <stdexcept>
 #include <cassert>
 
-static constexpr char CHAR62{ '+' };
-static constexpr char CHAR63{ '/' };
 static constexpr char CHARPAD{ '=' };
 static constexpr uint32_t BADCHAR{ 0x01FFFFFF };
 
