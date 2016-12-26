@@ -26,7 +26,9 @@ FileStream<uint8_t> CreateTempFile()
 	char buffer[L_tmpnam_s];
 	tmpnam_s(buffer, L_tmpnam_s);
 	return FileStream<uint8_t>::open(buffer, FileAccess::READ_WRITE, FileMode::F_CREATE_NEW, FileShare::SHARE_DELETE, FILE_FLAG_DELETE_ON_CLOSE);
-#else
+#elif defined(__APPLE__) & defined(__MACH__)
+	return FileStream<uint8_t>::create(::tmpfile());
+#elif defined(__linux__)
 	return FileStream<uint8_t>::create(::tmpfile64());
 #endif
 }

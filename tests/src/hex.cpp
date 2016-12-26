@@ -87,7 +87,7 @@ TEST(hex_case, from_split_space_hex_test)
 {
 	std::vector<char> buffer;
 	buffer.reserve(HEX.size() * 2);
-	auto i{ 0u };
+	size_t i{ 0 };
 
 	while(i < HEX.size() - 2)
 	{

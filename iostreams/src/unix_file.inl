@@ -10,6 +10,12 @@
 // SOFTWARE.
 
 #if defined (__linux__) || defined (__APPLE__)
+
+#ifdef __APPLE__ & __MACH__
+	#define lseek64 lseek
+	#define ftruncate64 ftruncate
+#endif
+
 #include "iostreams/file.h"
 #include "liberror/exception.h"
 #include <unistd.h>
@@ -65,10 +71,12 @@ namespace iostreams
 
 		static std::unique_ptr<FileImpl> open(const char* path, FileAccess file_access, FileMode file_mode, FileShare file_share, uint64_t flags)
 		{
+#if defined (__linux__)
 			if (UINTPTR_MAX == 0xFFFFFFFFFFFFFFFF)
 			{
 				flags |= O_LARGEFILE;
 			}
+#endif
 
 			switch (file_access)
 			{
