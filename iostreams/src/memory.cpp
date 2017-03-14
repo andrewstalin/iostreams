@@ -43,7 +43,7 @@ namespace iostreams
 
 		if (!blocks_.empty())
 		{
-			auto stream_size = size();
+			const auto stream_size = size();
 
 			if (stream_size > result.max_size())
 			{
