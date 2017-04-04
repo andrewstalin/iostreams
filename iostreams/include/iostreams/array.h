@@ -31,6 +31,8 @@ namespace iostreams
 
 	public:
 		ArrayStream() {}
+		
+		explicit ArrayStream(std::vector<byte_type>&& data);
 
 		ArrayStream(ArrayStream&&);
 		ArrayStream& operator=(ArrayStream&&);

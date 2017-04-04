@@ -16,6 +16,11 @@
 namespace iostreams
 {
 	template<typename byte_type>
+	ArrayStream<byte_type>::ArrayStream(std::vector<byte_type>&& data)
+		: data_(std::move(data))
+	{}
+
+	template<typename byte_type>
 	ArrayStream<byte_type>::ArrayStream(ArrayStream&& stream)
 		: data_(std::move(stream.data_))
 		, position_(stream.position_)
