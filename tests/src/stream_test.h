@@ -69,6 +69,8 @@ namespace iostreams
 		template<typename byte_type>
 		void ReadWriteTest(iostreams::IStream<byte_type>& stream)
 		{
+			size_t pos{ 0 };
+
 			for (const auto& chunk : tests::SplitData<std::vector<uint8_t>>(TEST_DATA, 5))
 			{
 				if (LOG_ENABLED)
@@ -76,10 +78,14 @@ namespace iostreams
 					tests::write_to_log(chunk);
 				}
 
-				stream.write(chunk.data(), chunk.size());
+				auto written_bytes = stream.write(chunk.data(), chunk.size());
+				pos += chunk.size();
+
+				EXPECT_EQ(chunk.size(), written_bytes);
+				EXPECT_EQ(pos, stream.tell());
 			}
 
-			EXPECT_EQ(stream.size(), TEST_DATA.size());
+			EXPECT_EQ(TEST_DATA.size(), stream.size());
 			stream.seek(0);
 
 			std::vector<uint8_t> actual(TEST_DATA.size());
@@ -97,10 +103,12 @@ namespace iostreams
 			stream.seek(0);
 			auto read_bytes = stream.read(buffer.data(), 3);
 			EXPECT_EQ(std::vector<uint8_t>({ 1, 2, 3 }), std::vector<uint8_t>(buffer.data(), buffer.data() + read_bytes));
+			EXPECT_EQ(3u, stream.tell());
 
 			stream.seek(-2, std::ios_base::end);
 			read_bytes = stream.read(buffer.data(), 10);
 			EXPECT_EQ(std::vector<uint8_t>({ 12, 13 }), std::vector<uint8_t>(buffer.data(), buffer.data() + read_bytes));
+			EXPECT_EQ(TEST_DATA.size(), stream.tell());
 		}
 
 		template<typename byte_type>

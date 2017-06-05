@@ -143,6 +143,7 @@ namespace iostreams
 		{
 			read_bytes = std::min<count_type>(count, static_cast<count_type>(data_size - position_));
 			std::memcpy(buffer, data_.data() + position_, read_bytes);
+			position_ += read_bytes;
 		}
 
 		return read_bytes;
