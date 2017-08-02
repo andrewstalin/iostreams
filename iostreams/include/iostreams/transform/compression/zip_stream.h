@@ -69,20 +69,20 @@ namespace iostreams
 
 		static ZipStream create(const std::shared_ptr<stream_type>& stream)
 		{
-			return ZipStream::create(stream, nullptr, CompressionLevel::NORMAL);
+			return ZipStream::create(stream, nullptr, CompressionLevel::NORMAL, true);
 		}
 
 		static ZipStream create(const std::shared_ptr<stream_type>& stream, const std::string& entry_name)
 		{
-			return ZipStream::create(stream, entry_name.c_str(), CompressionLevel::NORMAL);
+			return ZipStream::create(stream, entry_name.c_str(), CompressionLevel::NORMAL, true);
 		}
 
 		static ZipStream create(const std::shared_ptr<stream_type>& stream, CompressionLevel level)
 		{
-			return ZipStream::create(stream, nullptr, level);
+			return ZipStream::create(stream, nullptr, level, true);
 		}
 
-		static ZipStream create(const std::shared_ptr<stream_type>& stream, const char* entry_name, CompressionLevel level);
+		static ZipStream create(const std::shared_ptr<stream_type>& stream, const char* entry_name, CompressionLevel level, bool add_zip64_external_info);
 
 		void write(const byte_type* data, count_type size);
 		void close();

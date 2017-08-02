@@ -22,7 +22,7 @@
 namespace iostreams
 {
 	template<typename byte_type>
-	ZipStream<byte_type> ZipStream<byte_type>::create(const std::shared_ptr<stream_type>& stream, const char* entry_name, CompressionLevel level)
+	ZipStream<byte_type> ZipStream<byte_type>::create(const std::shared_ptr<stream_type>& stream, const char* entry_name, CompressionLevel level, bool add_zip64_external_info)
 	{
 		assert(stream != nullptr);
 
@@ -36,14 +36,14 @@ namespace iostreams
 		{
 #ifdef _WIN32
 			auto en = babel::encode("UTF-8", "cp866", entry_name, strlen(entry_name));
-			rc = ::zipOpenNewFileInZip64(zf, en.c_str(), nullptr, nullptr, 0, nullptr, 0, nullptr, Z_DEFLATED, get_zlib_level(level), true);
+			rc = ::zipOpenNewFileInZip64(zf, en.c_str(), nullptr, nullptr, 0, nullptr, 0, nullptr, Z_DEFLATED, get_zlib_level(level), add_zip64_external_info);
 #elif defined (__linux__) || defined (__APPLE__)
-			rc = ::zipOpenNewFileInZip64(zf, entry_name, nullptr, nullptr, 0, nullptr, 0, nullptr, Z_DEFLATED, get_zlib_level(level), true);
+			rc = ::zipOpenNewFileInZip64(zf, entry_name, nullptr, nullptr, 0, nullptr, 0, nullptr, Z_DEFLATED, get_zlib_level(level), add_zip64_external_info);
 #endif
 		}
 		else
 		{
-			rc = ::zipOpenNewFileInZip64(zf, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr, Z_DEFLATED, get_zlib_level(level), true);
+			rc = ::zipOpenNewFileInZip64(zf, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr, Z_DEFLATED, get_zlib_level(level), add_zip64_external_info);
 		}
 
 		THROW_IF(rc != ZIP_OK, ZLibException(rc, "zipOpenNewFileInZip64", ""));
